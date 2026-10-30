@@ -39,60 +39,98 @@ services:
         ipv4_address: 192.168.10.2
     volumes:
       - ./dhcp/kea-dhcp4.conf.json:/etc/kea/kea-dhcp4.conf
-      - ./dhcp/kea-dhcp-ddns.conf.json:/etc/kea/kea-dhcp-ddns.conf
-      - /var/log/dhcp.log:/var/log/dhcp.log
+
   
   #CLIENTES STARK
   bran:
-    build: ./docker/cliente
+    build: ./docker/cliente1
     container_name: bran
-    mac_address: 02:42:ac:11:00:10  # dirección HW fija
     networks:
       stark_net:
-        ipv4_address: 192.168.130.221
-        
+        ipv4_address: 192.168.10.1
+        mac_address: 02:42:ac:11:00:10  # dirección HW fija
+
     command: >
-      sh -c "slepp 5 seg" "dhclient -v eth0 && sleep infinity"
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
     cap_add:
-      - 
+      - NET_ADMIN
+    depends_on:
+      - kea
+
   jon:
-    build: ./docker/cliente
+    build: ./docker/cliente2
     container_name: jon
     networks:
       stark_net:
-    command: sh -c "dhclient -v eth0 && sleep infinity"
+    
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - kea
 
   sansa:
-    build: ./docker/cliente
+    build: ./docker/cliente3
     container_name: sansa
     networks:
       stark_net:
-    command: sh -c "dhclient -v eth0 && sleep infinity"
+       
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - kea
 
   robb:
-    build: ./docker/cliente
+    build: ./docker/cliente4
     container_name: robb
     networks:
       stark_net:
-    command: sh -c "dhclient -v eth0 && sleep infinity"
+        
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - kea
 
   # Cliente Red Lannister
   jamie:
-    build: ./docker/cliente
+    build: ./docker/cliente5
     container_name: jamie
     networks:
       lannister_net:
-    command: sh -c "dhclient -v eth0 && sleep infinity"
+        
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - kea
 
   # Cliente Red Targaryen
   daenerys:
-    build: ./docker/cliente
+    build: ./docker/cliente6
     container_name: daenerys
     networks:
       targaryen_net:
-    command: sh -c "dhclient -v eth0 && sleep infinity"
-    
+        
+    command: >
+      sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
+    cap_add:
+      - NET_ADMIN
+    depends_on:
+      - kea
+      
+#REDES    
 networks:
+  wan:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.200.0/24
   stark_net:
     driver: bridge
     ipam:
@@ -103,7 +141,6 @@ networks:
     ipam:
       config:
         - subnet: 192.168.11.0/24
-
   targaryen_net:
     driver: bridge
     ipam:

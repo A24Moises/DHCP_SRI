@@ -7,6 +7,11 @@
 //};
 
 //ZONAS DIRECTAS
+zone "wan.lan" {
+	type primary;
+    file "zonas/db.wan.lan";
+//  allow-update { key "rndc-key"; };
+};
 zone "stark.lan" {
 	type primary;
     file "zonas/db.stark.lan";
@@ -24,6 +29,11 @@ zone "targaryen.lan" {
 };
 
 //ZONAS INDIRECTAS
+zone "200.168.192.in-addr.arpa" {
+    type primary;
+    file "zonas/db.200.168.192";
+//  allow-update { key "rndc-key"; };
+};
 zone "10.168.192.in-addr.arpa" {
     type primary;
     file "zonas/db.10.168.192";
