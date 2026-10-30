@@ -43,7 +43,7 @@ services:
   
   #CLIENTES STARK
   bran:
-    build: ./docker/cliente1
+    build: ./docker/cliente
     container_name: bran
     networks:
       stark_net:
@@ -58,7 +58,7 @@ services:
       - ned
 
   jon:
-    build: ./docker/cliente2
+    build: ./docker/cliente
     container_name: jon
     networks:
       stark_net:
@@ -71,7 +71,7 @@ services:
       - ned
 
   sansa:
-    build: ./docker/cliente3
+    build: ./docker/cliente
     container_name: sansa
     networks:
       stark_net:
@@ -84,7 +84,7 @@ services:
       - ned
 
   robb:
-    build: ./docker/cliente4
+    build: ./docker/cliente
     container_name: robb
     networks:
       stark_net:
@@ -98,7 +98,7 @@ services:
 
   # Cliente Red Lannister
   jamie:
-    build: ./docker/cliente5
+    build: ./docker/cliente
     container_name: jamie
     networks:
       lannister_net:
@@ -112,7 +112,7 @@ services:
 
   # Cliente Red Targaryen
   daenerys:
-    build: ./docker/cliente6
+    build: ./docker/cliente
     container_name: daenerys
     networks:
       targaryen_net:
