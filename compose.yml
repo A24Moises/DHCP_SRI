@@ -1,73 +1,111 @@
 services:
 
-  router:
-    build: ./docker/router
-    hostname: router
-    networks:
-      rede_wan:
-        ipv4_address: 192.168.200.254  
-        interface_name: eth0  
-      dhcp_lab:
-        ipv4_address: 192.168.130.254
-        interface_name: eth1
-      rede2:
-        ipv4_address: 192.168.140.254
-        interface_name: eth2
-  dnsserver:
-    build: docker/dnsserver
-    hostname: dnsserver
+#ROUTER
+  # router:
+  #   build: ./docker/router
+  #   container_name: router
+  #   hostname: router
+  #   cap_add:
+  #     - NET_ADMIN
+  #   networks:
+  #     stark_net:
+  #       ipv4_address: 192.168.10.254  
+  #       interface_name: eth0  
+  #     lannister_net:
+  #       ipv4_address: 192.168.11.254
+  #       interface_name: eth1
+  #     targaryen_net:
+  #       ipv4_address: 192.168.12.254
+  #       interface_name: eth2
+  
+  #DNSSERVER:
+  arya:
+    build: ./docker/dnsserver
+    container_name: arya
+    hostname: arya
     networks: 
-      dhcp_lab:
-        ipv4_address: 192.168.130.9  
+      stark.net:
+        ipv4_address: 192.168.10.10  
     volumes:
       - ./dnsserver/named.conf.local:/etc/bind/named.conf.local
       - ./dnsserver/zonas:/var/cache/bind/zonas          
-  kea:
+  #KEA
+  ned:
     build: ./docker/kea
-    container_name: kea
+    container_name: ned
+    hostname: ned
     networks:
-      dhcp_lab:
-        ipv4_address: 192.168.130.2
+      stark_net:
+        ipv4_address: 192.168.10.2
     volumes:
       - ./dhcp/kea-dhcp4.conf.json:/etc/kea/kea-dhcp4.conf
+      - ./dhcp/kea-dhcp-ddns.conf.json:/etc/kea/kea-dhcp-ddns.conf
+      - /var/log/dhcp.log:/var/log/dhcp.log
   
-
-  
-  cliente1:
+  #CLIENTES STARK
+  bran:
     build: ./docker/cliente
-    container_name: client1
+    container_name: bran
+    mac_address: 02:42:ac:11:00:10  # dirección HW fija
     networks:
-      dhcp_lab:
+      stark_net:
         ipv4_address: 192.168.130.221
-        mac_address: 02:42:ac:11:00:10  # dirección HW fija
-
+        
     command: >
-      sh -c "dhclient -v eth0 && sleep infinity"
-
-  cliente2:
+      sh -c "slepp 5 seg" "dhclient -v eth0 && sleep infinity"
+    cap_add:
+      - 
+  jon:
     build: ./docker/cliente
-
+    container_name: jon
     networks:
-      dhcp_lab:
-        ipv4_address: 192.168.130.222
+      stark_net:
+    command: sh -c "dhclient -v eth0 && sleep infinity"
 
-    command: >
-      sh -c "dhclient -v eth0 && sleep infinity"
+  sansa:
+    build: ./docker/cliente
+    container_name: sansa
+    networks:
+      stark_net:
+    command: sh -c "dhclient -v eth0 && sleep infinity"
 
+  robb:
+    build: ./docker/cliente
+    container_name: robb
+    networks:
+      stark_net:
+    command: sh -c "dhclient -v eth0 && sleep infinity"
+
+  # Cliente Red Lannister
+  jamie:
+    build: ./docker/cliente
+    container_name: jamie
+    networks:
+      lannister_net:
+    command: sh -c "dhclient -v eth0 && sleep infinity"
+
+  # Cliente Red Targaryen
+  daenerys:
+    build: ./docker/cliente
+    container_name: daenerys
+    networks:
+      targaryen_net:
+    command: sh -c "dhclient -v eth0 && sleep infinity"
+    
 networks:
-  dhcp_lab:
+  stark_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.130.0/24
-  rede2:
+        - subnet: 192.168.10.0/24
+  lannister_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.140.0/24
+        - subnet: 192.168.11.0/24
 
-  rede_wan:
+  targaryen_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.200.0/24             
+        - subnet: 192.168.12.0/24             

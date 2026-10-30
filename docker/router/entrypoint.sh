@@ -13,8 +13,13 @@ nft list ruleset | grep -q 'oifname "eth0" masquerade' || \
   nft add rule ip nat POSTROUTING oifname "eth0" masquerade
 
 
-ip addr add 192.168.X.253/24 dev eth1
+ip addr add 192.168.10.252/24 dev eth0
+ip addr add 192.168.10.253/24 dev eth0
 
+sysctl -w net.ipv4.ip_forward=1
+dhcp-helper -s 192.168.10.2
+
+exec "$@"
 # Mantener el contenedor vivo
 #Chamar ao relay
 sleep infinity

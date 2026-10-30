@@ -1,0 +1,51 @@
+{
+  "DhcpDdns": {
+    "ip-address": "127.0.0.1",
+    "port": 53001,
+    "tsig-keys": [
+      {
+        "name": "rndc-key",
+        "algorithm": "hmac-sha256",
+        "secret": "CLAVE_BASE64_AQUI=="
+      }
+    ],
+    "forward-ddns": {
+      "ddns-domains": [
+        {
+          "name": "stark.lan.",
+          "key-name": "rndc-key",
+          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+        },
+        {
+          "name": "lannister.lan.",
+          "key-name": "rndc-key",
+          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+        },
+        {
+          "name": "targaryen.lan.",
+          "key-name": "rndc-key",
+          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+        }
+      ]
+    },
+    "reverse-ddns": {
+      "ddns-domains": [
+        {
+          "name": "10.168.192.in-addr.arpa.",
+          "key-name": "rndc-key",
+          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+        },
+        {
+          "name": "11.168.192.in-addr.arpa.",
+          "key-name": "rndc-key",
+          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+        },
+        {
+          "name": "12.168.192.in-addr.arpa.",
+          "key-name": "rndc-key",
+          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+        }
+      ]
+    }
+  }
+}
