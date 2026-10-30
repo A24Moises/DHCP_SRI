@@ -55,7 +55,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - kea
+      - ned
 
   jon:
     build: ./docker/cliente2
@@ -68,7 +68,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - kea
+      - ned
 
   sansa:
     build: ./docker/cliente3
@@ -81,7 +81,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - kea
+      - ned
 
   robb:
     build: ./docker/cliente4
@@ -94,7 +94,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - kea
+      - ned
 
   # Cliente Red Lannister
   jamie:
@@ -108,7 +108,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - kea
+      - ned
 
   # Cliente Red Targaryen
   daenerys:
@@ -122,7 +122,7 @@ services:
     cap_add:
       - NET_ADMIN
     depends_on:
-      - kea
+      - ned
       
 #REDES    
 networks:
