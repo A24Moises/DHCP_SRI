@@ -1,27 +1,26 @@
 services:
 
 #ROUTER
-  # router:
-  #   build: ./docker/router
-  #   container_name: router
-  #   hostname: router
-  #   cap_add:
-  #     - NET_ADMIN
-  #   networks:
-  #     stark_net:
-  #       ipv4_address: 192.168.10.254  
-  #       interface_name: eth0  
-  #     lannister_net:
-  #       ipv4_address: 192.168.11.254
-  #       interface_name: eth1
-  #     targaryen_net:
-  #       ipv4_address: 192.168.12.254
-  #       interface_name: eth2
+  router:
+    build: ./docker/router
+    hostname: router
+    networks:
+      red_wan:
+        ipv4_address: 192.168.200.254
+        interface_name: eth0 
+      red_stark_net:
+        ipv4_address: 192.168.10.254  
+        interface_name:  eth1 
+      red_lannister_net:
+        ipv4_address: 192.168.11.254
+        interface_name: eth2
+      red_targaryen_net:
+        ipv4_address: 192.168.12.254
+        interface_name: eth3
   
   #DNSSERVER:
   arya:
     build: ./docker/dnsserver
-    container_name: arya
     hostname: arya
     networks: 
       stark_net:
@@ -32,7 +31,6 @@ services:
   #KEA
   ned:
     build: ./docker/kea
-    container_name: ned
     hostname: ned
     networks:
       stark_net:
@@ -44,7 +42,6 @@ services:
   #CLIENTES STARK
   bran:
     build: ./docker/cliente
-    container_name: bran
     networks:
       stark_net:
         ipv4_address: 192.168.10.11
@@ -59,7 +56,6 @@ services:
 
   jon:
     build: ./docker/cliente
-    container_name: jon
     networks:
       stark_net:
     
@@ -72,7 +68,6 @@ services:
 
   sansa:
     build: ./docker/cliente
-    container_name: sansa
     networks:
       stark_net:
        
@@ -87,7 +82,7 @@ services:
     build: ./docker/cliente
     container_name: robb
     networks:
-      stark_net:
+      red_stark_net:
         
     command: >
       sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
@@ -99,9 +94,8 @@ services:
   # Cliente Red Lannister
   jamie:
     build: ./docker/cliente
-    container_name: jamie
     networks:
-      lannister_net:
+      red_lannister_net:
         
     command: >
       sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
@@ -113,10 +107,9 @@ services:
   # Cliente Red Targaryen
   daenerys:
     build: ./docker/cliente
-    container_name: daenerys
     networks:
-      targaryen_net:
-        
+      red_targaryen_net:
+
     command: >
       sh -c "ip addr flush dev eth0 && dhclient -v eth0 && sleep infinity"
     cap_add:
@@ -126,22 +119,22 @@ services:
       
 #REDES    
 networks:
-  wan:
+  red_wan:
     driver: bridge
     ipam:
       config:
         - subnet: 192.168.200.0/24
-  stark_net:
+  red_stark_net:
     driver: bridge
     ipam:
       config:
         - subnet: 192.168.10.0/24
-  lannister_net:
+  red_lannister_net:
     driver: bridge
     ipam:
       config:
         - subnet: 192.168.11.0/24
-  targaryen_net:
+  red_targaryen_net:
     driver: bridge
     ipam:
       config:
