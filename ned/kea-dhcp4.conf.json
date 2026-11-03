@@ -1,0 +1,67 @@
+{
+  "Dhcp4": {
+    "interfaces-config": {
+      "interfaces": [
+        "eth0"
+      ],
+      "dhcp-socket-type": "raw"
+    },
+    "lease-database": {
+      "type": "memfile",
+      "lfc-interval": 0
+    },
+    "valid-lifetime": 3600,
+    "rebind-timer": 3000,
+    "authoritative": true,
+    "renew-timer": 1800,
+    "option-data": [
+      {
+        "name": "domain-name-servers",
+        "data": "192.168.10.10"
+      }
+    ],
+    "subnet4": [
+      {
+        "id": 1,
+        "subnet": "192.168.10.0/24",
+        "pools": [
+          {
+            "pool": "192.168.10.30 - 192.168.10.32"
+          },
+          {
+            "pool": "192.168.10.101 - 192.168.10.230",
+            "option-data": [
+              {
+                "name": "routers",
+                "data": "192.168.10.253"
+              }
+            ]
+          }
+        ],
+        "reservations": [
+          {
+            "hw-address": "02:42:ac:11:00:30",
+            "ip-address": "192.168.10.31",
+            "hostname": "bran",
+            "option-data": [
+              {
+                "name": "routers",
+                "data": "192.168.10.252"
+              }
+            ]
+          }
+        ],
+        "option-data": [
+          {
+            "name": "domain-search",
+            "data": "stark.lan"
+          },
+          {
+            "name": "routers",
+            "data": "192.168.10.254"
+          }
+        ]
+      }
+    ]
+  }
+}
