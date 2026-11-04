@@ -462,6 +462,7 @@
         // 99 is most verbose. Be cautious, Kea can generate lots and lots
         // of logs if told to do so.
         "debuglevel": 0
+        //comentario
     }
   ]
 }
