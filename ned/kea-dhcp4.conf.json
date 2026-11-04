@@ -18,6 +18,10 @@
       {
         "name": "domain-name-servers",
         "data": "192.168.10.10"
+      },
+      {
+        "name": "ntp-servers",
+        "data": "150.214.94.10"
       }
     ],
     "subnet4": [
@@ -61,6 +65,25 @@
             "data": "192.168.10.254"
           }
         ]
+      },
+      {
+        "id": 2,
+        "subnet": "192.168.11.0/24",
+        "pools": [
+          {
+            "pool": "192.168.11.50 - 192.168.11.90"
+          } 
+        ],
+        "option-data": [
+            {
+              "name": "domain-search",
+              "data": "lannister.lan"
+            },
+            {
+              "name":"routers",
+              "data":"192.168.11.254"
+            }
+          ]
       }
     ]
   }
