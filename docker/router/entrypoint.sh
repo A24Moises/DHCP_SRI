@@ -19,9 +19,11 @@ ip addr add 192.168.10.253/24 dev eth1
 
 sysctl -w net.ipv4.ip_forward=1
 
-dhcp-helper -s 192.168.10.2
+
 
 exec "$@"
 # Mantener el contenedor vivo
 #Chamar ao relay
+dhcp-helper -s 192.168.10.2 -i eth2 -i eth3 -d
+
 sleep infinity

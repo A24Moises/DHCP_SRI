@@ -84,7 +84,36 @@
               "data":"192.168.11.254"
             }
           ]
+      },
+      {
+        "id": 3,
+        "subnet": "192.168.12.0/24",
+        "pools": [
+          {
+            "pool": "192.168.12.10 - 192.168.12.50"
+          } 
+        ],
+        "option-data": [
+            {
+              "name": "domain-search",
+              "data": "targaryen.lan"
+            },
+            {
+              "name":"routers",
+              "data":"192.168.12.254"
+            }
+          ]
       }
+    ],
+    "loggers": [
+        {
+            "name": "kea-dhcp4",
+            "output-options": [
+                { "output": "/var/log/kea/ned.log" }
+            ],
+            "severity": "INFO"
+        }
     ]
   }
 }
+

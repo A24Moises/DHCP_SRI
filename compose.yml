@@ -4,6 +4,7 @@ services:
   router:
     build: ./docker/router
     hostname: router
+    container_name: router
     networks:
       red_wan:
         ipv4_address: 192.168.200.254
@@ -17,27 +18,38 @@ services:
       red_targaryen_net:
         ipv4_address: 192.168.12.254
         interface_name: eth3
-  
+    cap_add:
+      - NET_ADMIN
   #arya:
   arya:
     build: ./docker/dnsserver
     hostname: arya
+    environment:
+      - GATEWAY=192.168.10.254
+    container_name: dnsserver
     networks:
       red_stark_net:
         ipv4_address: 192.168.10.10  
     volumes:
       - ./arya/named.conf.local:/etc/bind/named.conf.local
-      - ./arya/zonas:/var/cache/bind/zonas          
+      - ./arya/zonas:/var/cache/bind/zonas 
+    cap_add:
+      - NET_ADMIN
+             
   #KEA
   ned:
     build: ./docker/kea
+    container_name: kea
     hostname: ned
     networks:
       red_stark_net:
         ipv4_address: 192.168.10.2
     volumes:
       - ./ned/kea-dhcp4.conf.json:/etc/kea/kea-dhcp4.conf
-
+      - ./log:/var/log/kea
+      - ./ned/kea-dhcp-ddns.conf.json:/etc/kea/kea-dhcp-ddns.conf
+    cap_add:
+      - NET_ADMIN
   
   #CLIENTES STARK
   bran:
@@ -83,7 +95,7 @@ services:
 
   robb:
     build: ./docker/cliente
-    container_name: robb
+    container_name: cliente4
     networks:
       red_stark_net:
         
@@ -97,6 +109,7 @@ services:
   # Cliente Red Lannister
   jamie:
     build: ./docker/cliente
+    container_name: cliente5
     networks:
       red_lannister_net:
         
@@ -110,6 +123,7 @@ services:
   # Cliente Red Targaryen
   daenerys:
     build: ./docker/cliente
+    container_name: cliente6
     networks:
       red_targaryen_net:
 

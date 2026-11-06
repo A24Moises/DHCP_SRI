@@ -2,29 +2,47 @@
   "DhcpDdns": {
     "ip-address": "127.0.0.1",
     "port": 53001,
+    "dns-server-timeout": 500,
+    "ncr-protocol": "UDP",
+    "ncr-format": "JSON",
     "tsig-keys": [
       {
-        "name": "rndc-key",
+        "name": "llave-ned",
         "algorithm": "hmac-sha256",
-        "secret": "CLAVE_BASE64_AQUI=="
+        "secret": "Wm1vQ3pXaXhUeXBlRXhhbXBsZQ=="
       }
     ],
     "forward-ddns": {
       "ddns-domains": [
         {
           "name": "stark.lan.",
-          "key-name": "rndc-key",
-          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+          "key-name": "llave-ned",
+          "dns-servers": [ 
+            { 
+              "ip-address": "192.168.10.10",
+              "port":53 
+              } 
+            ]
         },
         {
           "name": "lannister.lan.",
-          "key-name": "rndc-key",
-          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+          "key-name": "llave-ned",
+          "dns-servers": [ 
+            { 
+              "ip-address": "192.168.10.10",
+              "port":53 
+              } 
+            ]
         },
         {
           "name": "targaryen.lan.",
-          "key-name": "rndc-key",
-          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+          "key-name": "llave-ned",
+          "dns-servers": [ 
+            { 
+              "ip-address": "192.168.10.10",
+              "port":53 
+              } 
+            ]
         }
       ]
     },
@@ -32,18 +50,33 @@
       "ddns-domains": [
         {
           "name": "10.168.192.in-addr.arpa.",
-          "key-name": "rndc-key",
-          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+          "key-name": "llave-ned",
+          "dns-servers": [ 
+            { 
+              "ip-address": "192.168.10.10",
+              "port":53 
+              } 
+            ]
         },
         {
           "name": "11.168.192.in-addr.arpa.",
-          "key-name": "rndc-key",
-          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+          "key-name": "llave-ned",
+          "dns-servers": [ 
+            { 
+              "ip-address": "192.168.10.10",
+              "port":53 
+              } 
+            ]
         },
         {
           "name": "12.168.192.in-addr.arpa.",
-          "key-name": "rndc-key",
-          "dns-servers": [ { "ip-address": "192.168.10.10" } ]
+          "key-name": "llave-ned",
+          "dns-servers": [ 
+            { 
+              "ip-address": "192.168.10.10",
+              "port":53 
+              } 
+            ]
         }
       ]
     }
